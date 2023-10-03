@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 use strict;
-my $version="1.0";
+my $version="1.01";
 
 # this script assumes everything is in the directory from which it was started:
 #  - the script itself
@@ -10,6 +10,9 @@ my $version="1.0";
 #
 # ffmpeg, wine and mktemp must be path available
 #
+# Version history
+# V1.01   : changes in COP field and ffmpeg parameters
+# V1.0    : inital version
 
 
 my @files=findFiles();
@@ -49,7 +52,7 @@ foreach(@files){
     $cnt++;
     print $origFile."\n";
     my $tempFile=`mktemp -u -p "."`;chomp($tempFile);$tempFile.".wav";
-    my $back=system("ffmpeg -i \"$origFile\" -f wav -c:a pcm_s16le -ac 1 -ar 16000 -empty_hdlr_name 1 -fflags +bitexact -flags:v +bitexact -flags:a +bitexact -map_metadata -1 \"$tempFile\"");
+    my $back=system("ffmpeg -i \"$origFile\" -f wav -c:a pcm_s16le -ar 44100 -empty_hdlr_name 1 -fflags +bitexact -flags:v +bitexact -flags:a +bitexact -map_metadata -1 \"$tempFile\"");
     if($back==0){
 	my $bookFile="$bookName/".sprintf("%04d", $cnt)." $bookName 0000.awb";
 	$back=system("wine encoder.exe -rate $bitRate -mono -ff raw -if $tempFile -of \"$bookFile\"");
@@ -67,7 +70,7 @@ foreach(@files){
     }
 }
 my $pre="AWBVOL082002SLD090080PUP003NMD".sprintf("%03d",$cnt)."BLN020BLP020ELA";
-my $post="COP5521 \r\n";
+my $post="COP0000\r\n";
 my $mid="000";
 my $sizeCnt=0;
 my $mul=(0.95*$allFileSize/($bitRate*1024/8))/60;
