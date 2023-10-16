@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 use strict;
-my $version="1.01";
+my $version="1.02";
 
 # this script assumes everything is in the directory from which it was started:
 #  - the script itself
@@ -11,6 +11,7 @@ my $version="1.01";
 # ffmpeg, wine and mktemp must be path available
 #
 # Version history
+# V1.02   : fixed sorting error, allow direct conversion of wav assuming they have a fitting format
 # V1.01   : changes in COP field and ffmpeg parameters
 # V1.0    : inital version
 
@@ -51,12 +52,21 @@ foreach(@files){
     my $origFile=$_;
     $cnt++;
     print $origFile."\n";
-    my $tempFile=`mktemp -u -p "."`;chomp($tempFile);$tempFile.".wav";
-    my $back=system("ffmpeg -i \"$origFile\" -f wav -c:a pcm_s16le -ar 44100 -empty_hdlr_name 1 -fflags +bitexact -flags:v +bitexact -flags:a +bitexact -map_metadata -1 \"$tempFile\"");
+    my $back=-1;
+    my $tempFile="";
+    if($origFile!~/\.wav$/){
+	$tempFile=`mktemp -u -p "."`;chomp($tempFile);$tempFile.".wav";
+	$back=system("ffmpeg -i \"$origFile\" -f wav -c:a pcm_s16le -ar 44100 -empty_hdlr_name 1 -fflags +bitexact -flags:v +bitexact -flags:a +bitexact -map_metadata -1 \"$tempFile\"");
+    }else{
+	$tempFile=$origFile;
+	$back=0;
+    }
     if($back==0){
 	my $bookFile="$bookName/".sprintf("%04d", $cnt)." $bookName 0000.awb";
-	$back=system("wine encoder.exe -rate $bitRate -mono -ff raw -if $tempFile -of \"$bookFile\"");
-	unlink $tempFile;
+	$back=system("wine encoder.exe -rate $bitRate -mono -ff raw -if \"$tempFile\" -of \"$bookFile\"");
+	if($origFile ne $tempFile){
+	    unlink $tempFile;
+	}
 	if($back!=0){
 	    print STDERR "Could not convert temporary wav file to awb plus playaway file.\n";
 	    exit 7;
@@ -94,12 +104,12 @@ sub findFiles{
     if(opendir(D,".")){
 	foreach(readdir(D)){
 	    my $entry=$_;
-	    if(($entry ne ".")&&($entry ne "..")&&(($entry=~/\.mp3$/i)||($entry=~/\.amr$/i)||($entry=~/\.awb$/i))){
+	    if(($entry ne ".")&&($entry ne "..")&&(($entry=~/\.mp3$/i)||($entry=~/\.amr$/i)||($entry=~/\.awb$/i)||($entry=~/\.wav$/i))){
 		push @files,$entry;
 	    }
 	}
 	closedir(D);
-	sort @files;
+	@files=sort @files;
     }else{
 	print STDERR "ERROR: Could not open directory . for reading.\n";
 	exit 2;
