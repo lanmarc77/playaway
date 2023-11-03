@@ -129,12 +129,13 @@ The chapter order is determined by a simple Perl sort which sorts based on ASCII
 - The Playaway graphics model switches off after 8hrs of continuous playback independent of the battery level  
 - The Playaway 7 segment model switches off after 6hrs of continuous playback independent of the battery level  
 - The PCB solder spot marked as PWR (top right) is actually a connection to pin 70/PSWITCH of the STMP3770. If pulled high to 5V with a resistor it boots into USB recovery mode and reports as such a device via USB. It might be possible to read/reflash the firmware via this interface.  
-- possible (currently untested) compatible audio jacks for refurbishing: https://de.rs-online.com/web/p/klinken-steckerbuchsen/2596685, https://datasheet.lcsc.com/lcsc/2009061705_Korean-Hroparts-Elec-PJ-320B-3A_C707224.pdf
+- compatible tested audio jack for refurbishing the 7 segment model: CUI SJ-3523-SMT-TR (https://de.rs-online.com/web/p/klinken-steckerbuchsen/2596685, https://www.digikey.de/de/products/detail/cui-devices/SJ-3523-SMT-TR/281297)
+- reading some FAQs from libraries it seems there is a shuffle play mode
   
 # Model overview
 As described there are different models. It is currently unclear how many hardware/software versions exists. At least the models with a 7 segments display exists and those with the graphics display.  
 Some graphics models greet you with either "NOW YOU SEE ME" or "BUILT FOR LISTENING" ([here](pics/playaway_differentDisplay2.jpg)).  
-The following table gives an overview of the models researched already and their characteristics.
+The following table shows the models researched already and their characteristics.
   
 Legend:  
   
@@ -150,6 +151,9 @@ Legend:
 |Pelican Brief by J. Grisham|11:37:40|36kBit/s|?|S|Hynix HY27UF082G2B TPCB 020AA / 2Gbit|STMP3770 A2 PTX AD1023AV TAIW|2009-11-25| [F](pics/models/pelicanbriefF.jpg),B,[PF](pics/models/pelicanbriefPF.jpg),[PB](pics/models/pelicanbriefPB.jpg) (by [mitsake.net](https://www.mitsake.net/2019/06/playaway-audiobook-teardown/))|
 |Freedom A Novel by Jonathan Franzen|24:09:17|31.2kBit/s|01.05.2012|S|Hynix HY27UF084G2B TPCB 927A / 4Gbit|STMP3770 A2 PTX AE1007AC TAIW|2009-11-19| [F](pics/models/freedomF.jpg),[B](pics/models/freedomB.jpg),[PF](pics/models/freedomPF.jpg),[PB](pics/models/freedomPB.jpg)|
 |French Silk by Sandra Brown|15:50:18|31.2kBit/s|01.09.2010|S|Hynix H27U4G8T2BTR BC 011FA / 4Gbit|STMP3770 A2 PTX AC1018AJ TAIW|2010-05-28| [F](pics/models/frenchsilkF.jpg),[B](pics/models/frenchsilkB.jpg),[PF](pics/models/frenchsilkPF.jpg),[PB](pics/models/frenchsilkPB.jpg)|
+|Hell's Corner by David Baldacci |14:23:11|31.2kBit/s|09.11.2010|S|Hynix HY27UF082G2B TPCB 016F / 2Gbit|STMP3770 A2 PTX AJ1019AP TAIW|2010-05-28| [F](pics/models/hcornerF.jpg),[B](pics/models/hcornerB.jpg),[PF](pics/models/hcornerPF.jpg),[PB](pics/models/hcornerPB.jpg)|
+|Celebrity in Death by J.D. Robb|13:23:06|31.2kBit/s|21.02.2012|S|Hynix H27U2G8F2BTR BC 290AA / 2Gbit|STMP3770 A3 PTX AA1304F TAIW|2011-08-18| [F](pics/models/celebdeathF.jpg),[B](pics/models/celebdeathB.jpg),[PF](pics/models/celebdeathPF.jpg),[PB](pics/models/celebdeathPB.jpg)|
+|The Elephant Keeper's Children by Peter Høeg|13:44:20|31.2kBit/s|23.10.2012|S|Hynix HY27UF082G2B TPCB 224F / 2Gbit|STMP3770 A3 PTX AD1208N TAIW|2011-08-18| [F](pics/models/elephantchildrenF.jpg),[B](pics/models/elephantchildrenB.jpg),[PF](pics/models/elephantchildrenPF.jpg),[PB](pics/models/elephantchildrenPB.jpg)|
   
   
 # Future ideas
