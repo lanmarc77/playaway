@@ -47,7 +47,7 @@ Once connected I was greeted with the following file system layout:
 The flash has the following partition table:  
 ![image](pics/playaway_partition.png)  
   
-We can use 105MiB for audio files (for 256MiB flash versions ???/for 512MiB flash versions 461MiB). I assume the missing few MiBytes are used for the firmware (as to much is missing just because of the file system overhead) and can not (yet?) be accessed via USB. The SOC can boot firmware from an attached flash memory.  
+We can use 105MiB for audio files (for 256MiB flash versions 230MiB/for 512MiB flash versions 461MiB). I assume the missing few MiBytes are used for the firmware (as to much is missing just because of the file system overhead) and can not (yet?) be accessed via USB. The SOC can boot firmware from an attached flash memory.  
 My main goal was to put other audio books on it. After testing a lot with what files can be deleted it turned out only the .awb files and the PATWEAKS.DAT are needed for the SOC firmware to work correctly. The other files store the current listening position and also seem to keep track of the validity of files via CRC method (CMI_CRC.DAT). It is a bare flash chip, so the SOC firmware must keep track of errors that usually is being dealt with via wear leveling if using an SSD within their firmware.  
   
 **Update 15.10.2023:**  
@@ -58,7 +58,7 @@ The file naming is slightly different. The reason is that the audio book from th
 ### Creating .AWB files
 The format used is [AMR-WB+](https://en.wikipedia.org/wiki/Extended_Adaptive_Multi-Rate_%E2%80%93_Wideband). This is a documented codec but not implemented in any well used open source software. Ffmpeg as a very long standing [feature request](https://trac.ffmpeg.org/ticket/6140).  
 It was necessary to get the freely available (windows only...mmppff) decoder and encoder from [here at 3GPP](https://portal.3gpp.org/desktopmodules/Specifications/SpecificationDetails.aspx?specificationId=1451).  
-Only the files encoder.exe and er-libisomedia.dll are needed to encode new AMR-WB+ files from .wav files. The encoder.exe runs without any problems using wine.  
+Only the files encoder.exe and er-libisomedia.dll are needed to encode new AMR-WB+ files from .wav files. The encoder.exe runs without any problems using wine. Faster is the Linux port from Dhiru Kohlia (see how to get it below).  
 I experimented a bit and was successful with generating a .wav file from e.g. an MP3 using ffmpeg with the following command line.  
 `
 ffmpeg -i input.mp3 -f wav -c:a pcm_s16le -ar 44100 -empty_hdlr_name 1 -fflags +bitexact -flags:v +bitexact -flags:a +bitexact -map_metadata -1 input_as_wav.wav
@@ -69,6 +69,12 @@ The generated .wav can now be encoded into an AMR-WB+ file with the following co
 `
 wine encoder.exe -rate 10 -mono -ff raw -if input_as_wav.wav -of "0001 BookName 0000.awb"
 `  
+  
+or with the approx. 34% faster Linux binary:  
+`
+./encoder-new -rate 10 -mono -ff raw -if input_as_wav.wav -of "0001 BookName 0000.awb"
+`  
+
 I figured out that the lowest bitrate parameter (-rate) for my Playaway is 10. Anything lower resulted in stuttering playback. The highest tested bitrate is 12 but I assume all higher bitrates are no problem. The original files on my Playaway were encoded with 36kbit/s. Most likely AMR-WB+ mode index 23 with ISF index 13, the best possible mono rate resulting in approx. 6.5hrs playtime. 10kbit/s still sounds good enough for me and as there only are 105MiB on my first model we want to test the lower boundaries. With 105MiB and 10kbit/s we can store approx. 23hrs. on the Playaway.  
 I was not able to get stereo to play on the Playaway. It did encode everything but the player did not play the file but jumped directly to the next chapter/track.  
 I stayed with the file naming convention I found and did not test any other versions. The first 4 digit number is the chapter while the last 4 digit number is always 0000. I assume the last 4 digit number comes in use when multiple audio books are placed on one Playaway.  
@@ -117,12 +123,21 @@ In this mode the Playaway shows not only the chapter it plays and the amount of 
 New progress bar time display mode (only for the graphics model):  
 The 7 segment model was missing everything after the NMD014 tag. I figured out if this information is present the 7 segment model simply does not care and plays the files as usual. The graphics model on the other hand then does not display the length of the progress bar based from the complete audio book but from the currently playing chapter. On every chapter change it resets back and starts again. By leaving out the ELA tag one can choose on the graphics model how the progress bar should look.  
   
+# Key combos
+- when in paused mode SPD+REWIND allows to reset all settings, one needs to press PLAY to accept
+- when in play mode SPD+REWIND locks the keys of the Playaway 7 segment model, unlock again with the same combo
+- when in play mode SPD+EQ shows version information of the firmware and audio book (more research is required to understand what all the numbers mean)
+  
 # The Perl script
-The script assumes it can write to the current directory and has only been tested with Linux. It assumes ffmpeg, wine and mktemp is callable. No additional modules are needed.  
-It expects all files to be converted (.mp3/.amr/.awb) within the same directory where it is placed as well as the encoder.exe and er-libisomedia.dll.  
+The script assumes it can write to the current directory and only works with Linux. It assumes `ffmpeg` and `mktemp` are callable. No additional Perl modules are needed.  
+It expects all audio files to be converted within the same directory where it is placed.  
 It will create a local directory based on the book name you choose and place all converted files there to copy on your Playaway. All existing files of the Playaway can be deleted or backed up if you need them later.  
-The script tries to detect all errors so as long as no "ERROR: ..." message appears everything is ok. The script does not hide the output of the called commands and is therefore very talkative.  
+The script tries to detect all errors so as long as no "ERROR: ..." message appears everything is ok. The script does not hide all the output of the called commands and is therefore a bit talkative.  
 The chapter order is determined by a simple Perl sort which sorts based on ASCII position.  
+
+## AMR-WB+ encoder
+Finally the AMR-WB+ encoder binary `encoder-new` is also needed in the current directory.  
+This binary can be compiled from [this original repository](https://github.com/kholia/amr-wbp-plus) (Thank you Dhiru Kohlia!) or directly downloaded as [statically compiled Linux binaries from my fork repository](https://github.com/lanmarc77/amr-wbp-plus/releases).  
   
 # Other findings
 
@@ -131,6 +146,7 @@ The chapter order is determined by a simple Perl sort which sorts based on ASCII
 - The PCB solder spot marked as PWR (top right) is actually a connection to pin 70/PSWITCH of the STMP3770. If pulled high to 5V with a resistor it boots into USB recovery mode and reports as such a device via USB. It might be possible to read/reflash the firmware via this interface.  
 - compatible tested audio jack for refurbishing the 7 segment model: CUI SJ-3523-SMT-TR (https://de.rs-online.com/web/p/klinken-steckerbuchsen/2596685, https://www.digikey.de/de/products/detail/cui-devices/SJ-3523-SMT-TR/281297)
 - reading some FAQs from libraries it seems there is a shuffle play mode
+- the 7 segment model supports very long files of 10hrs but displays a maximum timestamp of 255:59 which then over-/underflows
   
 # Model overview
 As described there are different models. It is currently unclear how many hardware/software versions exists. At least the models with a 7 segments display exists and those with the graphics display.  
@@ -159,5 +175,5 @@ Legend:
 # Future ideas
 - a back sticker that is rewriteable like a chalk board that can hold the currently installed audio book name  
 - more research into the missing currently unknown fields of PATWEAKS.DAT  
-- trying to get working to a SOC firmware channel (e.g. via USB recovery mode?) and write my own  
+- trying to get a working SOC firmware channel (e.g. via USB recovery mode?) and write my own  
 

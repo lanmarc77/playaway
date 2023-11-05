@@ -1,24 +1,24 @@
 #!/usr/bin/perl
 use strict;
-my $version="1.03";
+my $version="1.04";
 
 # this script assumes everything is in the directory from which it was started:
 #  - the script itself
-#  - encoder.exe
-#  - er-libisomedia.dll
-#  - any .mp3/.amr/.awb files to be converted into Playaway audio book
+#  - encoder-new binary created from https://github.com/kholia/amr-wbp-plus in local directory
+#  - any .mp3/.amr/.awb/.m4a/.ogg files to be converted into Playaway audio book
 #
-# ffmpeg, wine and mktemp must be path available
+# ffmpeg and mktemp must be path available
 #
 # Version history
+# V1.04   : updated for faster none wine encoder, thanks to Dhiru Kohlia https://github.com/kholia/amr-wbp-plus
 # V1.03   : added option to choose to generate files for Playaway light or classic, cosmetics and more error checking
 # V1.02   : fixed sorting error, allow direct conversion of wav assuming they have a fitting format
 # V1.01   : changes in COP field and ffmpeg parameters
 # V1.0    : inital version
 
-
-my @files=findFiles();
 print "Playaway audio book creator $version\n\n";
+preFlightChecks();
+my @files=findFiles();
 if (@files==0){
     print "ERROR: No convertable files found in current directory.\n";
     exit 1;
@@ -63,22 +63,14 @@ foreach(@files){
     my $tempFile="";
     if($origFile!~/\.wav$/){
 	$tempFile=`mktemp -u -p "."`;chomp($tempFile);$tempFile.".wav";
-	$back=system("ffmpeg -hide_banner -v error -stats -i \"$origFile\" -f wav -c:a pcm_s16le -ar 44100 -empty_hdlr_name 1 -fflags +bitexact -flags:v +bitexact -flags:a +bitexact -map_metadata -1 \"$tempFile\"");
+	$back=system("ffmpeg -hide_banner -v error -stats -i \"$origFile\" -f wav -c:a pcm_s16le -ar 44100 -ac 1 -empty_hdlr_name 1 -fflags +bitexact -flags:v +bitexact -flags:a +bitexact -map_metadata -1 \"$tempFile\"");
     }else{
 	$tempFile=$origFile;
 	$back=0;
     }
     if($back==0){
 	my $bookFile="$bookName/".sprintf("%04d", $cnt)." $bookName 0000.awb";
-	my $tempSize = (stat $tempFile)[7];
-	if($tempSize >= 2*1024*1024*1024){
-	    print STDERR "ERROR: The converted/supplied .wav is greater than 2GiB (usually files runtime > 3h:22min:45s). The encoder.exe is 32bit and can not handle files this size.\n";
-	    if($origFile ne $tempFile){
-		unlink $tempFile;
-	    }
-	    exit 7;
-	}
-	$back=system("wine encoder.exe -rate $bitRate -mono -ff raw -if \"$tempFile\" -of \"$bookFile\"");
+	$back=system("./encoder-new -rate $bitRate -mono -ff raw -if \"$tempFile\" -of \"$bookFile\"");
 	if($origFile ne $tempFile){
 	    unlink $tempFile;
 	}
@@ -127,7 +119,7 @@ sub findFiles{
     if(opendir(D,".")){
 	foreach(readdir(D)){
 	    my $entry=$_;
-	    if(($entry ne ".")&&($entry ne "..")&&(($entry=~/\.mp3$/i)||($entry=~/\.amr$/i)||($entry=~/\.awb$/i)||($entry=~/\.wav$/i))){
+	    if(($entry ne ".")&&($entry ne "..")&&(($entry=~/\.mp3$/i)||($entry=~/\.amr$/i)||($entry=~/\.awb$/i)||($entry=~/\.wav$/i)||($entry=~/\.m4a$/i)||($entry=~/\.ogg$/i))){
 		push @files,$entry;
 	    }
 	}
@@ -139,3 +131,22 @@ sub findFiles{
     }
     return @files;
 }
+
+sub preFlightChecks{
+    my $back=system("ffmpeg -h > /dev/null 2>&1");
+    if($back != 0){
+	print STDERR "ERROR: ffmpeg could not be found.\n";
+	exit 20;
+    }
+    $back=system("mktemp -u -p \".\" > /dev/null 2>&1");
+    if($back != 0){
+	print STDERR "ERROR: mktemp does not seem to work.\n";
+	exit 20;
+    }
+    $back=system("./encoder-new > /dev/null 2>&1");
+    if($back != 256){#exit code 1, which is normal exit code when no encoding happens
+	print STDERR "ERROR: encoder-new binary not found.\n";
+	exit 20;
+    }
+}
+
