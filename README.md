@@ -145,6 +145,7 @@ This binary can be compiled from [this original repository](https://github.com/k
 - The Playaway 7 segment model switches off after 6hrs of continuous playback independent of the battery level  
 - The PCB solder spot marked as PWR (top right) is actually a connection to pin 70/PSWITCH of the STMP3770. If pulled high to 5V with a resistor it boots into USB recovery mode and reports as such a device via USB. It might be possible to read/reflash the firmware via this interface.  
 - compatible tested audio jack for refurbishing the 7 segment model: CUI SJ-3523-SMT-TR (https://de.rs-online.com/web/p/klinken-steckerbuchsen/2596685, https://www.digikey.de/de/products/detail/cui-devices/SJ-3523-SMT-TR/281297)
+- untested probably compatible audio jack for refurbishing the graphics model: CUI SJ-3501-SMT-TR (https://www.digikey.de/de/products/detail/cui-devices/SJ-3501-SMT-TR/2625165)
 - reading some FAQs from libraries it seems there is a shuffle play mode
 - the 7 segment model supports very long files of 10hrs but displays a maximum timestamp of 255:59 which then over-/underflows
   
@@ -170,6 +171,9 @@ Legend:
 |Hell's Corner by David Baldacci |14:23:11|31.2kBit/s|09.11.2010|S|Hynix HY27UF082G2B TPCB 016F / 2Gbit|STMP3770 A2 PTX AJ1019AP TAIW|2010-05-28| [F](pics/models/hcornerF.jpg),[B](pics/models/hcornerB.jpg),[PF](pics/models/hcornerPF.jpg),[PB](pics/models/hcornerPB.jpg)|
 |Celebrity in Death by J.D. Robb|13:23:06|31.2kBit/s|21.02.2012|S|Hynix H27U2G8F2BTR BC 290AA / 2Gbit|STMP3770 A3 PTX AA1304F TAIW|2011-08-18| [F](pics/models/celebdeathF.jpg),[B](pics/models/celebdeathB.jpg),[PF](pics/models/celebdeathPF.jpg),[PB](pics/models/celebdeathPB.jpg)|
 |The Elephant Keeper's Children by Peter Høeg|13:44:20|31.2kBit/s|23.10.2012|S|Hynix HY27UF082G2B TPCB 224F / 2Gbit|STMP3770 A3 PTX AD1208N TAIW|2011-08-18| [F](pics/models/elephantchildrenF.jpg),[B](pics/models/elephantchildrenB.jpg),[PF](pics/models/elephantchildrenPF.jpg),[PB](pics/models/elephantchildrenPB.jpg)|
+|The Husband's Secret by Liane Moriarty|13:41:13|31.2kBit/s|01.10.2013|G|Hynix H27U2G8F2CTR BC 321HA / 2Gbit|STMP3770 A3 PTX AA13240 TAIW|1345| [F](pics/models/husbandsecretF.jpg),[B](pics/models/husbandsecretB.jpg),[PF](pics/models/husbandsecretPF.jpg),[PB](pics/models/husbandsecretPB.jpg)|
+|Us Against You by Frederik Backman|14:16:45|31.2kBit/s|05.06.2018|G|MXIC MX30LF2G18AC-TI / 2Gbit|STMP3770 A3 PTX XAA1747G TAIW|1807| [F](pics/models/usagainstyouF.jpg),[B](pics/models/usagainstyouB.jpg),[PF](pics/models/usagainstyouPF.jpg),[PB](pics/models/usagainstyouPB.jpg)|
+|One By One by Ruth Ware|13:08:10|15.6kBit/s|08.09.2020|G|Hynix HU27U1G8F2CTR VC 805A / 1Gbit|STMP3770 A3 PTX XAA1934A TAIW|1947| [F](pics/models/onebyoneF.jpg),[B](pics/models/onebyoneB.jpg),[PF](pics/models/onebyonePF.jpg),[PB](pics/models/onebyonePB.jpg)|
   
   
 # Future ideas
