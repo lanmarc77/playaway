@@ -174,6 +174,7 @@ Legend:
 |The Husband's Secret by Liane Moriarty|13:41:13|31.2kBit/s|01.10.2013|G|Hynix H27U2G8F2CTR BC 321HA / 2Gbit|STMP3770 A3 PTX AA13240 TAIW|1345| [F](pics/models/husbandsecretF.jpg),[B](pics/models/husbandsecretB.jpg),[PF](pics/models/husbandsecretPF.jpg),[PB](pics/models/husbandsecretPB.jpg)|
 |Us Against You by Frederik Backman|14:16:45|31.2kBit/s|05.06.2018|G|MXIC MX30LF2G18AC-TI / 2Gbit|STMP3770 A3 PTX XAA1747G TAIW|1807| [F](pics/models/usagainstyouF.jpg),[B](pics/models/usagainstyouB.jpg),[PF](pics/models/usagainstyouPF.jpg),[PB](pics/models/usagainstyouPB.jpg)|
 |One By One by Ruth Ware|13:08:10|15.6kBit/s|08.09.2020|G|Hynix HU27U1G8F2CTR VC 805A / 1Gbit|STMP3770 A3 PTX XAA1934A TAIW|1947| [F](pics/models/onebyoneF.jpg),[B](pics/models/onebyoneB.jpg),[PF](pics/models/onebyonePF.jpg),[PB](pics/models/onebyonePB.jpg)|
+|Kingdon Keepers: The Return Book Three by Ridley Pearson|10:06:31|20.40kBit/s|01.04.2017|G|Hynix H27U1G8F2BTR BC 637A / 1Gbit|STMP3770 A3 PTX XAA1627AE TAIW|1646| [F](pics/models/kingdomkF.jpg),[B](pics/models/kingdomkB.jpg),[PF](pics/models/kingdomkPF.jpg),[PB](pics/models/kingdomkPB.jpg)|
   
   
 # Future ideas
