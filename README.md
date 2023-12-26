@@ -169,39 +169,56 @@ Software is written by humans and we make mistakes. Here are some bugs found whe
 # Model overview
 As described there are different models. It is currently unclear how many hardware/software versions exists. At least the models with a segments display exists and those with the graphics display.  
 Some graphics models greet you with either "NOW YOU SEE ME" or "BUILT FOR LISTENING" ([here](pics/playaway_differentDisplay2.jpg)).  
-The following table shows the models researched already and their characteristics.
+The following table shows the models researched already and their characteristics.  
   
 Legend:  
   
 * model: S=segment model, G=graphics model  
-* PCB dates on the graphics models are most likely year followed by calendar week  
-
-
+* PCB dates in 4 digit format are most likely year followed by calendar week  
+  
+  
 | book        | runtime   | bitrate  | release date  | model   | flash |  processor | PCB date | firmware | pictures |
 |-------------|-----------|----------|---------|-------|------------|----------|------------|------------|------------|
 |Six Years by Harlan Coben|10:34:21|?|19.03.2013|S|Hynix H27U1G8F2BTR BC 233AA / 1Gbit|STMP3770 A3 PTX AA1307G TAIW|?|?| [F](pics/models/sixyearsF.jpg),[B](pics/models/sixyearsB.jpg),PF,[PB](pics/models/sixyearsPB.jpg) (by [Quick Look & Teardown](https://www.youtube.com/watch?v=CapoZ9ZmoAM))|
 |The Breakdown by B.A. Paris|09:20:14|?|18.07.2017|G|Hynix H27U1G8F2BTR BC 637A / 1Gbit|STMP3770 A3 PTX XAA1B27AE TAIW|1646|?| [F](pics/models/thebreakdownF.jpg),[B](pics/models/thebreakdownB.jpg),[PF](pics/models/thebreakdownPF.jpg),[PB](pics/models/thebreakdownPB.jpg) (by [Quick Look & Teardown](https://www.youtube.com/watch?v=CapoZ9ZmoAM)())|
 |Jordan (Caballo de Troya) by J.J. Benitez|02:13:47|36kBit/s|01.09.2009|G|Hynix H27U1G8F2BTR BC 30AA / 1GBit|STMP3770 A3 PTX A1429U TAIW|1447|01:04| [F](pics/models/jordanF.jpg),[B](pics/models/jordanB.jpg),[PF](pics/models/jordanPF.jpg),[PB](pics/models/jordanPB.jpg)|
 |Pelican Brief by J. Grisham|11:37:40|36kBit/s|?|S|Hynix HY27UF082G2B TPCB 020AA / 2Gbit|STMP3770 A2 PTX AD1023AV TAIW|2009-11-25|| [F](pics/models/pelicanbriefF.jpg),B,[PF](pics/models/pelicanbriefPF.jpg),[PB](pics/models/pelicanbriefPB.jpg) (by [mitsake.net](https://www.mitsake.net/2019/06/playaway-audiobook-teardown/))|
-|Freedom A Novel by Jonathan Franzen|24:09:17|31.2kBit/s|01.05.2012|S|Hynix HY27UF084G2B TPCB 927A / 4Gbit|STMP3770 A2 PTX AE1007AC TAIW|2009-11-19|| [F](pics/models/freedomF.jpg),[B](pics/models/freedomB.jpg),[PF](pics/models/freedomPF.jpg),[PB](pics/models/freedomPB.jpg)|
+|Freedom A Novel by Jonathan Franzen|24:09:17|31.2kBit/s|01.05.2012|S|Hynix HY27UF084G2B TPCB 927A / 4Gbit|STMP3770 A2 PTX AE1007AC TAIW|2009-11-19|REV74| [F](pics/models/freedomF.jpg),[B](pics/models/freedomB.jpg),[PF](pics/models/freedomPF.jpg),[PB](pics/models/freedomPB.jpg)|
 |French Silk by Sandra Brown|15:50:18|31.2kBit/s|01.09.2010|S|Hynix H27U4G8T2BTR BC 011FA / 4Gbit|STMP3770 A2 PTX AC1018AJ TAIW|2010-05-28|REV74| [F](pics/models/frenchsilkF.jpg),[B](pics/models/frenchsilkB.jpg),[PF](pics/models/frenchsilkPF.jpg),[PB](pics/models/frenchsilkPB.jpg)|
-|Hell's Corner by David Baldacci |14:23:11|31.2kBit/s|09.11.2010|S|Hynix HY27UF082G2B TPCB 016F / 2Gbit|STMP3770 A2 PTX AJ1019AP TAIW|2010-05-28|| [F](pics/models/hcornerF.jpg),[B](pics/models/hcornerB.jpg),[PF](pics/models/hcornerPF.jpg),[PB](pics/models/hcornerPB.jpg)|
-|Celebrity in Death by J.D. Robb|13:23:06|31.2kBit/s|21.02.2012|S|Hynix H27U2G8F2BTR BC 290AA / 2Gbit|STMP3770 A3 PTX AA1304F TAIW|2011-08-18|| [F](pics/models/celebdeathF.jpg),[B](pics/models/celebdeathB.jpg),[PF](pics/models/celebdeathPF.jpg),[PB](pics/models/celebdeathPB.jpg)|
-|The Elephant Keeper's Children by Peter Høeg|13:44:20|31.2kBit/s|23.10.2012|S|Hynix HY27UF082G2B TPCB 224F / 2Gbit|STMP3770 A3 PTX AD1208N TAIW|2011-08-18|| [F](pics/models/elephantchildrenF.jpg),[B](pics/models/elephantchildrenB.jpg),[PF](pics/models/elephantchildrenPF.jpg),[PB](pics/models/elephantchildrenPB.jpg)|
+|Hell's Corner by David Baldacci |14:23:11|31.2kBit/s|09.11.2010|S|Hynix HY27UF082G2B TPCB 016F / 2Gbit|STMP3770 A2 PTX AJ1019AP TAIW|2010-05-28|REV63| [F](pics/models/hcornerF.jpg),[B](pics/models/hcornerB.jpg),[PF](pics/models/hcornerPF.jpg),[PB](pics/models/hcornerPB.jpg)|
+|Celebrity in Death by J.D. Robb|13:23:06|31.2kBit/s|21.02.2012|S|Hynix H27U2G8F2BTR BC 290AA / 2Gbit|STMP3770 A3 PTX AA1304F TAIW|2011-08-18 / 1224|| [F](pics/models/celebdeathF.jpg),[B](pics/models/celebdeathB.jpg),[PF](pics/models/celebdeathPF.jpg),[PB](pics/models/celebdeathPB.jpg)|
+|The Elephant Keeper's Children by Peter Høeg|13:44:20|31.2kBit/s|23.10.2012|S|Hynix HY27UF082G2B TPCB 224F / 2Gbit|STMP3770 A3 PTX AD1208N TAIW|2011-08-18 / 1224|REV74| [F](pics/models/elephantchildrenF.jpg),[B](pics/models/elephantchildrenB.jpg),[PF](pics/models/elephantchildrenPF.jpg),[PB](pics/models/elephantchildrenPB.jpg)|
 |The Husband's Secret by Liane Moriarty|13:41:13|31.2kBit/s|01.10.2013|G|Hynix H27U2G8F2CTR BC 321HA / 2Gbit|STMP3770 A3 PTX AA13240 TAIW|1345|01:03| [F](pics/models/husbandsecretF.jpg),[B](pics/models/husbandsecretB.jpg),[PF](pics/models/husbandsecretPF.jpg),[PB](pics/models/husbandsecretPB.jpg)|
 |Us Against You by Frederik Backman|14:16:45|31.2kBit/s|05.06.2018|G|MXIC MX30LF2G18AC-TI / 2Gbit|STMP3770 A3 PTX XAA1747G TAIW|1807|| [F](pics/models/usagainstyouF.jpg),[B](pics/models/usagainstyouB.jpg),[PF](pics/models/usagainstyouPF.jpg),[PB](pics/models/usagainstyouPB.jpg)|
-|One By One by Ruth Ware|13:08:10|15.6kBit/s|08.09.2020|G|Hynix HU27U1G8F2CTR VC 805A / 1Gbit|STMP3770 A3 PTX XAA1934A TAIW|1947|| [F](pics/models/onebyoneF.jpg),[B](pics/models/onebyoneB.jpg),[PF](pics/models/onebyonePF.jpg),[PB](pics/models/onebyonePB.jpg)|
+|One By One by Ruth Ware|13:08:10|15.6kBit/s|08.09.2020|G|Hynix HU27U1G8F2CTR VC 805A / 1Gbit|STMP3770 A3 PTX XAA1934A TAIW|1947|01:08| [F](pics/models/onebyoneF.jpg),[B](pics/models/onebyoneB.jpg),[PF](pics/models/onebyonePF.jpg),[PB](pics/models/onebyonePB.jpg)|
 |Kingdom Keepers: The Return Book Three by Ridley Pearson|10:06:31|20.4kBit/s|01.04.2017|G|Hynix H27U1G8F2BTR BC 637A / 1Gbit|STMP3770 A3 PTX XAA1627AE TAIW|1646|01:05| [F](pics/models/kingdomkF.jpg),[B](pics/models/kingdomkB.jpg),[PF](pics/models/kingdomkPF.jpg),[PB](pics/models/kingdomkPB.jpg)|
 |All We Ever Wanted by Emily Griffin|10:29:05|18kBit/s|01.07.2018|G|Toshiba TC58BVG0S3HTA00 / 1Gbit|STMP3770 A3 PTX XAA1833AA TAIW|1837|01:08| [F](pics/models/allweeverwantedF.jpg),[B](pics/models/allweeverwantedB.jpg),[PF](pics/models/allweeverwantedPF.jpg),[PB](pics/models/allweeverwantedPB.jpg)|
 |The Perfect Wife by JP Delaney|10:42:02|18kBit/s|06.08.2019|G|MXIC MX30LF1G18AC-TI / 1Gbit|STMP3770 A3 PTX XAA1911AW TAIW|1918|01:08| [F](pics/models/theperfectwifeF.jpg),[B](pics/models/theperfectwifeB.jpg),[PF](pics/models/theperfectwifePF.jpg),[PB](pics/models/theperfectwifePB.jpg)|
 |The Song Of The Quarkbeast by Jasper Fforde|07:36:00|20.4kBit/s|11.03.2014|G|Hynix H27U2G8F2CTR BC 348F / 2Gbit|STMP3770 A3 PTX AA1312C TAIW|1347|01:04| [F](pics/models/quarkbeastF.jpg),[B](pics/models/quarkbeastB.jpg),[PF](pics/models/quarkbeastPF.jpg),[PB](pics/models/quarkbeastPB.jpg)|
-|Between Love & Honor by Alexandra Lapierre|14:40:27|31.2kBit/s|17.04.2014|S|Hynix HY27UF082G2B TPCB 118F / 2Gbit|STMP3770 A3 PTX AA1146E TAIW|2011-08-18|REV74| [F](pics/models/loveandhonorF.jpg),[B](pics/models/loveandhonorB.jpg),[PF](pics/models/loveandhonorPF.jpg),[PB](pics/models/loveandhonorPB.jpg)|
-|Rage of The Dragon by Margaret Weis & Tracy Hickman|11:23:45|31.2kBit/s|24.04.2012|S|Hynix HY27UF082G2B TPCB 118F / 2Gbit|STMP3770 A3 PTX AA1147AL TAIW|2011-08-18|REV74| [F](pics/models/rageofthedragonF.jpg),[B](pics/models/rageofthedragonB.jpg),[PF](pics/models/rageofthedragonPF.jpg),[PB](pics/models/rageofthedragonPB.jpg)|
+|Between Love & Honor by Alexandra Lapierre|14:40:27|31.2kBit/s|17.04.2014|S|Hynix HY27UF082G2B TPCB 118F / 2Gbit|STMP3770 A3 PTX AA1146E TAIW|2011-08-18 / 1143|REV74| [F](pics/models/loveandhonorF.jpg),[B](pics/models/loveandhonorB.jpg),[PF](pics/models/loveandhonorPF.jpg),[PB](pics/models/loveandhonorPB.jpg)|
+|Rage of The Dragon by Margaret Weis & Tracy Hickman|11:23:45|31.2kBit/s|24.04.2012|S|Hynix HY27UF082G2B TPCB 118F / 2Gbit|STMP3770 A3 PTX AA1147AL TAIW|2011-08-18 / 1143|REV74| [F](pics/models/rageofthedragonF.jpg),[B](pics/models/rageofthedragonB.jpg),[PF](pics/models/rageofthedragonPF.jpg),[PB](pics/models/rageofthedragonPB.jpg)|
 |Kiss The Girls And Make The Cry by Mary Higgins Clark|09:52:04|20.4kBit/s|05.11.2019|G|Toshiba TC58BVG0S3HTA00 / 1Gbit|STMP3770 A3 PTX XAC1735D TAIW|1912|01:08| [F](pics/models/kissthegirlsF.jpg),[B](pics/models/kissthegirlsB.jpg),[PF](pics/models/kissthegirlsPF.jpg),[PB](pics/models/kissthegirlsPB.jpg)|
 |Thirteen Reasons Why by Jay Asher|06:35:45|31.2kBit/s|15.04.2012|G|MXIC MX30LF1G18AC-TI / 1Gbit|STMP3770 A3 PTX XAA1651A TAIW|1726|01:05| [F](pics/models/thirteenreasonsnwhyF.jpg),[B](pics/models/thirteenreasonsnwhyB.jpg),[PF](pics/models/thirteenreasonsnwhyPF.jpg),[PB](pics/models/thirteenreasonsnwhyPB.jpg)|
 |A Nantucket Wedding by Nancy Thayer|10:31:56|18kBit/s|03.04.2018|G|MXIC MX30LF1G18AC-TI / 1Gbit|STMP3770 A3 PTX XAA1738AL TAIW|1749|01:08| [F](pics/models/nantucketweddingF.jpg),[B](pics/models/nantucketweddingB.jpg),[PF](pics/models/nantucketweddingPF.jpg),[PB](pics/models/nantucketweddingPB.jpg)|
-
-    
+  
+  
+## Firmware versions
+While the Playaway is in mass storage mode the firmware (or parts of it) can be extracted using the tool [scsitools from the rockbox poject](https://www.rockbox.org/).  
+The flash layout of the audio book "The Perfect Wife" looked like [this](1gbit_scsi_flashlayout.txt).  
+Trying to upgrade (using scsitools) a graphics model running on version 01:04 to version 01:08 resulted in a bricked device that does not work anymore.  
+Playing a little bit with the binaries it seems they use the default/non encryption key 00000000000000000000000000000000.  
+The following table shows a list of the already extracted firmware. Maybe a way is found to update the Playaways in the future.  
+  
+| Model | Version  | size in bytes  | SHA256 |
+|-------|----------|----------------|--------|
+|S|REV63|1944784|97a04165d13b997c9f3e8ff27791f2a824f9dadbebf0b2e94f2ab2014adf0ef9|
+|S|REV74|1948880|91178f2b9fc9f0ccc46eb417a2c1f4c0b03e94150a20e611e19ba23ce456b78c|
+|G|01:03|3870608|0a9f7da24274bd082f4b6fa154c57251d73351d1dc63d18020205def67826a7e|
+|G|01:04|3870608|2bf379fff9e479c993f7e1b9e9c53681688c2ec435325a4079d3149d0fb473f7|
+|G|01:05|3780496|00f0c2d8b4d3625cb4d3a2e772bf80ca1154c68e3ae275cee5c2a5c93d2fff4d|
+|G|01:08|3870608|974d9f9cc9c65aa5c4fd8ef92cf556c7a5ae64934c77f1b3048ce8d1a3f413ed|
+  
+  
 # Future ideas
 - a back sticker that is rewriteable like a chalk board that can hold the currently installed audio book name  
 - more research into the missing currently unknown fields of PATWEAKS.DAT  

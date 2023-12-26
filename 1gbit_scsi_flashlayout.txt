@@ -1,0 +1,129 @@
+Information
+  Vendor: SigmaTel
+  Product: SDK Device
+  Protocol: 6.0
+Device
+  Serial Number:  1a 0b 00 00 02 ae cc 14 00 02 e3 42 08 2d cc 14 ...........B.-..
+  Chip Major Rev ID: 37b0
+  ROM Rev ID: 2
+Logical Media
+  Number of drives: 0
+  Media size: 134217728 (128.000 MiB)
+  Allocation unit size: 2048 (2.000 KiB)
+  Initialised: 1
+  State: 0
+  Write protected: 0
+  Serial:  31 41 30 42 30 30 30 30 30 32 41 45 43 43 31 34 1A0B000002AECC14
+ 30 30 30 32 45 33 34 32 30 38 32 44 43 43 31 34 0002E342082DCC14
+  System: 1
+  Present: 1
+  Page size: 2112 (2.062 KiB)
+  Vendor: 194 (?)
+  Number of devices: 1
+Logical Media Table
+  Drive No:  0 Type: 0 (Data) Tag: 0xa (Data) Size: 112.000 MiB
+  Drive No: 50 Type: 0x1 (System) Tag: 0x50 (Boot) Size: 3.750 MiB
+  Drive No: 60 Type: 0x1 (System) Tag: 0x60 (?) Size: 3.750 MiB
+  Drive No: 70 Type: 0x1 (System) Tag: 0x70 (?) Size: 3.750 MiB
+  Drive No:  3 Type: 0x2 (Hidden) Tag: 0xc (?) Size: 1.000 MiB
+  Drive No:  2 Type: 0x2 (Hidden) Tag: 0xb (Hidden) Size: 1.000 MiB
+Drive 00
+  Sector size: 2048 (2.000 KiB)
+  Erase size: 131072 (128.000 KiB)
+  Drive size: 110493696 (105.375 MiB)
+  Sector count: 53952
+  Type: 0 (Data)
+  Tag: 0 (System)
+  Component version: 0.0.0
+  Project version: 0.0.0
+  Write protected: 0
+Information
+  Vendor: SigmaTel
+  Product: SDK Device
+  Protocol: 6.0
+Device
+  Serial Number:  1a 0b 00 00 02 ae cc 14 00 02 e3 42 08 2d cc 14 ...........B.-..
+  Chip Major Rev ID: 37b0
+  ROM Rev ID: 2
+Logical Media
+  Number of drives: 0
+  Media size: 134217728 (128.000 MiB)
+  Allocation unit size: 2048 (2.000 KiB)
+  Initialised: 1
+  State: 0
+  Write protected: 0
+  Serial:  31 41 30 42 30 30 30 30 30 32 41 45 43 43 31 34 1A0B000002AECC14
+ 30 30 30 32 45 33 34 32 30 38 32 44 43 43 31 34 0002E342082DCC14
+  System: 1
+  Present: 1
+  Page size: 2112 (2.062 KiB)
+  Vendor: 194 (?)
+  Number of devices: 1
+Logical Media Table
+  Drive No:  0 Type: 0 (Data) Tag: 0xa (Data) Size: 112.000 MiB
+  Drive No: 50 Type: 0x1 (System) Tag: 0x50 (Boot) Size: 3.750 MiB
+  Drive No: 60 Type: 0x1 (System) Tag: 0x60 (?) Size: 3.750 MiB
+  Drive No: 70 Type: 0x1 (System) Tag: 0x70 (?) Size: 3.750 MiB
+  Drive No:  3 Type: 0x2 (Hidden) Tag: 0xc (?) Size: 1.000 MiB
+  Drive No:  2 Type: 0x2 (Hidden) Tag: 0xb (Hidden) Size: 1.000 MiB
+Drive 00
+  Sector size: 2048 (2.000 KiB)
+  Erase size: 131072 (128.000 KiB)
+  Drive size: 110493696 (105.375 MiB)
+  Sector count: 53952
+  Type: 0 (Data)
+  Tag: 0 (System)
+  Component version: 0.0.0
+  Project version: 0.0.0
+  Write protected: 0
+Drive 50
+  Sector size: 2048 (2.000 KiB)
+  Erase size: 131072 (128.000 KiB)
+  Drive size: 3932160 (3.750 MiB)
+  Sector count: 1920
+  Type: 1 (System)
+  Tag: 0 (System)
+  Component version: 5.0.0
+  Project version: 4.1.0
+  Write protected: 0
+Drive 60
+  Sector size: 2048 (2.000 KiB)
+  Erase size: 131072 (128.000 KiB)
+  Drive size: 3932160 (3.750 MiB)
+  Sector count: 1920
+  Type: 1 (System)
+  Tag: 0 (System)
+  Component version: 5.0.0
+  Project version: 4.1.0
+  Write protected: 0
+Drive 70
+  Sector size: 2048 (2.000 KiB)
+  Erase size: 131072 (128.000 KiB)
+  Drive size: 3932160 (3.750 MiB)
+  Sector count: 1920
+  Type: 1 (System)
+  Tag: 0 (System)
+  Component version: 5.0.0
+  Project version: 4.1.0
+  Write protected: 0
+Drive 03
+  Sector size: 2048 (2.000 KiB)
+  Erase size: 131072 (128.000 KiB)
+  Drive size: 1048576 (1.000 MiB)
+  Sector count: 512
+  Type: 2 (Hidden)
+  Tag: 0 (System)
+  Component version: 0.0.0
+  Project version: 0.0.0
+  Write protected: 0
+Drive 02
+  Sector size: 2048 (2.000 KiB)
+  Erase size: 131072 (128.000 KiB)
+  Drive size: 1048576 (1.000 MiB)
+  Sector count: 512
+  Type: 2 (Hidden)
+  Tag: 0 (System)
+  Component version: 0.0.0
+  Project version: 0.0.0
+  Write protected: 0
+
