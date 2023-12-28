@@ -1,0 +1,22 @@
+constants
+{
+}
+options
+{
+    productVersion = "004.001.000";
+    componentVersion = "005.000.000";
+    driveTag = 0x0;
+    flags = 0x0;
+    timestampLow = 0xa85cfa80;
+    timestampHigh = 0x209ce;
+    sbMinorVersion = 0x1;
+}
+sources
+{
+    own = "test.elf";
+}
+section(0)
+{
+    load own;
+    jump own(0);
+}

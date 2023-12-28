@@ -218,6 +218,10 @@ The following table shows a list of the already extracted firmware. Maybe a way 
 |G|01:05|3780496|00f0c2d8b4d3625cb4d3a2e772bf80ca1154c68e3ae275cee5c2a5c93d2fff4d|
 |G|01:08|3870608|974d9f9cc9c65aa5c4fd8ef92cf556c7a5ae64934c77f1b3048ce8d1a3f413ed|
   
+##
+# Unbricking / Low level access
+If a Playaway is bricked there is currently no way to revive it. Still I created a POC which shows a possible
+future way. You can find it in the [poc_unbrick](poc_unbrick) folder.  
   
 # Future ideas
 - a back sticker that is rewriteable like a chalk board that can hold the currently installed audio book name  
