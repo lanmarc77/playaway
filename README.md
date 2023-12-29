@@ -3,7 +3,7 @@
 ![image](pics/playaway_device_g.jpg)  
 ![image](pics/playaway_device_16s.jpg)  
 They can be found in public libraries and are rather expensive compared to other general purpose audio/MP3 players and come in two versions: an older model with a [16 segment display](https://en.wikipedia.org/wiki/Sixteen-segment_display) and a newer version with graphics display and backlight.  
-Still though they concentrate on the basics and doing these basics well. It seems they follow one of the Unix philosophy cornerstone to [do one thing and do that well](https://en.wikipedia.org/wiki/Unix_philosophy). The devices have huge physical buttons, a display (that is not really needed), a standard 3.5mm headphone jack, remember exactly the listening position and run for 20+hrs on a standard AAA battery. You take the device as a normal book and start listening. No smartphone or other device features that could distract you from just diving in to the story the author wants to present to you.  
+Still though they concentrate on the basics and doing these basics well. It seems they follow one of the Unix philosophy cornerstone to [do one thing and do that well](https://en.wikipedia.org/wiki/Unix_philosophy). The devices have huge physical buttons, a display (that is not really needed), a standard 3.5mm headphone jack, remember exactly the listening position and run for 20+hrs on a standard AAA battery. You take the device with you like a normal book and just start listening. No smartphone or other device features that could distract you from just diving in to the story the author wants to present to you.  
 The devices can be bought with one single audio book on them and no (official) way of changing this. If bought new they [start at](https://shop.playaway.com/playaway) approx. 40€ (October 2023) depending on the audio book stored on them. Playaway only wants organizational customers (e.g. libraries) so individuals need to checkout the second hand market.  
   
 This repository shows an unofficial way to make more use of the Playaway hardware by allowing to put other audio books on them and therefore also avoiding e-waste. This usually requires opening the device and soldering wires on the printed circuit board as well as installing and running the software in this repository. All your might be existing warranty is then lost.  
@@ -35,30 +35,36 @@ A more flexible and long term approach was to actually add a micro USB connector
 and also for one of my segment models:  
 ![image](pics/playaway_16s_musb.jpg)
   
-As a working intermediate step I also built a pogo clip adapter. With this adapter I only need make holes in the back cover to read and reprogram the Playaway:  
+And as I got more and more devices a pogo clip adapter got useful. With this adapter I only need to make holes in the back cover to read and rewrite the Playaway:  
 ![image](pics/playaway_pogo.jpg)
   
 # File system structure
-**HINT**: This chapter and subchapters are updated in a history like style whenever new information is discovered. It starts with the oldest information first.  
-
+  
 Once connected I was greeted with the following file system layout:  
 ![image](pics/playaway_initial_filesystem.png)  
   
 The flash has the following partition table:  
 ![image](pics/playaway_partition.png)  
   
-We can use 105MiB for audio files (for 256MiB flash versions 230MiB/for 512MiB flash versions 461MiB). I assume the missing few MiBytes are used for the firmware (as to much is missing just because of the file system overhead) and can not (yet?) be accessed via USB. The SOC can boot firmware from an attached flash memory.  
-My main goal was to put other audio books on it. After testing a lot with what files can be deleted it turned out only the .awb files and the PATWEAKS.DAT are needed for the SOC firmware to work correctly. The other files store the current listening position and also seem to keep track of the validity of files via CRC method (CMI_CRC.DAT). It is a bare flash chip, so the SOC firmware must keep track of errors that usually is being dealt with via wear leveling if using an SSD within their firmware.  
+We can use 105MiB for audio files (for 256MiB flash versions 230MiB/for 512MiB flash versions 461MiB). The missing few MiBytes are used for the firmware (as to much is missing just because of the file system overhead). The SOC can boot firmware from an attached flash memory.  
+My main goal was to put other audio books on it.  
   
-**Update 15.10.2023:**  
-On my segment model the file structure looked like this:  
+On one of my segment models the file structure looked like this:  
 ![image](pics/playaway_initial_filesystem_16s.png)  
 The file naming is slightly different. The reason is that the audio book from this segment Playaway has not only chapters but also subchapters. The segment display showed: 1*1, 2*1, 2*2, 2*3, 3*1 ... while also displaying the very first file in the list on the display as Intro.  
+  
+After testing a lot with what files can be deleted it turned out only the .awb files and the PATWEAKS.DAT are needed for the SOC firmware to work correctly.  
+The other files store the current listening position and also seem to keep track of the validity of files via CRC method (CMI_CRC.DAT). It is a bare flash chip, so the SOC firmware must keep track of errors that usually is being dealt with via wear leveling if using an SSD within their firmware.  
+It is important to note that all theses additional files **must be deleted** if new audio files and a new PATWEAKS.DAT are put on the Playaway. Otherwise the information stored
+in these other files do not match the actual audio book files anymore. The firmware will recreate the missing files fitting to the new audio book files.
+  
 
 ### Creating .AWB files
-The format used is [AMR-WB+](https://en.wikipedia.org/wiki/Extended_Adaptive_Multi-Rate_%E2%80%93_Wideband). This is a documented codec but not implemented in any well used open source software. Ffmpeg as a very long standing [feature request](https://trac.ffmpeg.org/ticket/6140).  
-It was necessary to get the freely available (windows only...mmppff) decoder and encoder from [here at 3GPP](https://portal.3gpp.org/desktopmodules/Specifications/SpecificationDetails.aspx?specificationId=1451).  
-Only the files encoder.exe and er-libisomedia.dll are needed to encode new AMR-WB+ files from .wav files. The encoder.exe runs without any problems using wine. Faster is the Linux port from Dhiru Kohlia (see how to get it below).  
+The format used is [AMR-WB+](https://en.wikipedia.org/wiki/Extended_Adaptive_Multi-Rate_%E2%80%93_Wideband). This is a documented
+codec but not implemented in any well used open source software. Ffmpeg as a very long standing [feature request](https://trac.ffmpeg.org/ticket/6140).  
+It is possible to get the freely available (windows only) decoder and encoder from [here at 3GPP](https://portal.3gpp.org/desktopmodules/Specifications/SpecificationDetails.aspx?specificationId=1451).  
+Only the files encoder.exe and er-libisomedia.dll are needed to encode new AMR-WB+. The encoder.exe runs without any problems using wine. Faster is the Linux port from Dhiru Kohlia (see how to get it below).  
+The encoder needs a specific .wav format as input file.  
 I experimented a bit and was successful with generating a .wav file from e.g. an MP3 using ffmpeg with the following command line.  
 `
 ffmpeg -i input.mp3 -f wav -c:a pcm_s16le -ar 44100 -empty_hdlr_name 1 -fflags +bitexact -flags:v +bitexact -flags:a +bitexact -map_metadata -1 input_as_wav.wav
@@ -74,32 +80,63 @@ or with the approx. 34% faster Linux binary:
 `
 ./encoder-new -rate 10 -mono -ff raw -if input_as_wav.wav -of "0001 BookName 0000.awb"
 `  
-
-I figured out that the lowest bitrate parameter (-rate) for my Playaway is 10. Anything lower resulted in stuttering playback. The highest tested bitrate is 12 but I assume all higher bitrates are no problem. The original files on my Playaway were encoded with 36kbit/s. Most likely AMR-WB+ mode index 23 with ISF index 13, the best possible mono rate resulting in approx. 6.5hrs playtime. 10kbit/s still sounds good enough for me and as there only are 105MiB on my first model we want to test the lower boundaries. With 105MiB and 10kbit/s we can store approx. 23hrs. on the Playaway.  
+#### On bitrates, storage and runtime
+I figured out that the lowest bitrate parameter (-rate) for my Playaway is 10. Anything lower resulted in stuttering playback.
+The highest tested bitrate is 36kbit/s. The original files on my Playaway were encoded with 36kbit/s.
+Most likely AMR-WB+ mode index 23 with ISF index 13, the best possible mono rate resulting in approx. 6.5hrs playtime.
+10kbit/s still sounds good enough for me and as there only are 105MiB on my first model we want to test the lower boundaries. With 105MiB and 10kbit/s we can store approx. 23hrs. on the Playaway.  
 I was not able to get stereo to play on the Playaway. It did encode everything but the player did not play the file but jumped directly to the next chapter/track.  
-I stayed with the file naming convention I found and did not test any other versions. The first 4 digit number is the chapter while the last 4 digit number is always 0000. I assume the last 4 digit number comes in use when multiple audio books are placed on one Playaway.  
 I also tested AMR-NB and AMR-WB files but they did not play.  
   
-**Update 15.10.2023:**  
+#### File naming conventions
+I stayed with the file naming convention I found and did not test any other versions.
+The first 4 digit number is the chapter while the last 4 digit number is always 0000. I assume the last 4 digit number comes
+in use when multiple audio books are placed on one Playaway.  
+  
 The file names of my first segment model looked slightly different (see above).  
-The first 6 digits of the name are split in groups of three with the first group being the main chapter and the second group being the subchapter in that chapter. The last 4 0000 digits are still unclear what they mean.  
-The very first file only contains 0s in its digits and is displayed as Intro.  
+The first 6 digits of the name are split in groups of three with the first group being the main chapter and the
+second group being the subchapter in that chapter.
+The last 4 0000 digits are still unclear what they mean.  
+The very first file only contains 0s in its digits and is displayed as Intro on the Playaway.  
 This naming convention and type of display only activates if subchapter mode is enabled in the PATWEAKS.DAT (see chapter below). Otherwise the Playaway just displays normally counting up chapters.  
   
 ### Generating PATWEAKS.DAT
-The .awb files are of no use if there are not referenced correctly in the PATWEAKS.DAT. Solving this was the main puzzling work. The original I found on my Playaway looked like this:  
+The .awb files are of no use if there are not referenced correctly in the PATWEAKS.DAT. When placing a new PATWEAKS.DAT and new .awb files on the Playaway it is important to delete ALL other files from the Playaway.  
+A minimal PATWEAKS.DAT that I tested and works for the segment and graphics models looks like this:  
+  
+`
+NMD003
+`
+  
+This example assumes 3 .awb files as the digits in `NMD003` specify the number of .awb files.  
+You need to adjust this value to match to number of .awb files exactly.  
+The line is finished with a windows line break (\r\n).  
+  
+#### Inside the PATWEAKS.DAT
+Solving this is the main puzzling work. The original I found on my first Playaway looked like this:  
 `
 AWBVOL082002SLD090080PUP003NMD003BLN020BLP020ELA00003B07D0BECOP5521~ 2007 FonoLibro Inc.00000019^ 2006 J.J. Bentez,222006 Editorial Planeta0000
 `  
 A (more or less) human readable file in plain ASCII with an ending windows line break. Comparing this string with the one from the video (see prework links above) showed the similarities and differences. A lot of debugging and testing later the following can be documented:  
+  
+All currently analyzed PATWEAKS.DAT start with `AWBVOL` so it is assumed this is kind of a starting header. 
+Then different flags (capital letters) followed by parameters (mostly numbers) are following.  
+The following table lists all known flags and where known describes it's purpose. Not all flags might work on all models or firmware versions.  
+  
+| flag example | description |
+|--------------|------------|
+|AWBVOL082002|most likely header with version information|
+|SLD090080|?|
+|PUP003|?|
+|AF*|switches to subchapter mode if the file naming is also correct|
+|TRK|displays the word "Track"/"TR" instead of "Chapter"/"CH" when skipping|
+|NMD003|sets the number of .awb files for this audio book, this is the only required flag|
+|BLN020|?, but only is present if COP is present|
+|BLP020|?, but only is present if COP is present|
+|ELA00003B07D0BE|determines the relation of chapter and length of the progress bar on a graphics model|
+|COP5521~ 2007 FonoLibro Inc.00000019^ 2006 J.J. Bentez,222006 Editorial Planeta0000|displays copyright information during start of the first track, internal structure still unclear|
 
-**First part:** `AWBVOL082002SLD090080PUP003`  
-Currently unknown what it means. I left it as it was.  
-  
-**Middle part I:** `NMD003BLN020BLP020`  
-In this part only NMD003 has relevance (NMD=NumberMeDia?). 003 determines the number of files that make the audio book. This needs changing if your audio book has more or less files. It must match the number of .awb files on the Playaway *exactly* or the SOC firmware shows an error.  
-  
-**Middle part II:** `ELA00003B07D0BE`  
+##### Details to ELA
 This took the longest to figure out and it's still not perfect but good enough (ELA=Estimated Length Audio?). The numbers are groups by hex digits of three:  
 `000 03B 07D 0BE`  
 Each group represents one chapter(=.awb file) and the length of the progress meter which is displayed. Additionally a first entry which is (most likely) always 000.  
@@ -109,19 +146,24 @@ Time difference: 000-03B = 59minutes
 Time difference: 03B-07D = 66minutes  
 Time difference: 07D-0BE = 65minutes  
   
-We can see that the ELA calculated times do not match 100%. It is unclear why the numbers do not match better. I tested different files which are smaller/shorter so that the progress meter also changes faster and it worked good enough. Also a 1pixel difference because of a slightly off value is hardly noticeable once the audio book is longer than one hour.  
+We can see that the ELA calculated times do not match 100%. It is unclear why the numbers do not match better.
+I tested different files which are smaller/shorter so that the progress meter also changes faster and it worked
+good enough. Also a 1pixel difference because of a slightly off value is hardly noticeable once the audio book
+is longer than one hour.  
+If this flag is left out the progress meter display the length of the currently played chapter and not based
+from the length of the whole audio book.  
   
-**Last part:** `COP5521~ 2007 FonoLibro Inc.00000019^ 2006 J.J. Bentez,222006 Editorial Planeta0000`  
-It is unclear what exactly COP5521 means (COP=COPyright?). But the following string is shown when the Playaway starts playing the first chapter of an audio book for a few seconds until the play time is displayed. It has an internal structure which seems to determine the position on the display and the time it is displayed.  
-Setting it to COP0000 followed by a windows line break does not display anything.  
+##### Details to AF*
+If this flag is present the Playaway does not only show the chapter it plays and the amount of chapters
+(on the graphics model) but can also display subchapters. The graphics model shows e.g. 2-1 56
+(chapter 2, subchapter 1 of 56 in total, [example](pics/playaway_differentDisplay.jpg)). For this mode
+the files need to be named with 6 digits format (see above) AND the PATWEAKS.DAT needs to contain the AF* flag.  
   
-**Update 15.10.2023:**  
-My first segment model taught me that there are more display modes for the chapters and the progress bar of the graphics model.  
-New subchapter display mode (AF* tag discovered):  
-In this mode the Playaway shows not only the chapter it plays and the amount of chapters (on the graphics model) but can also display subchapters. The graphics model shows e.g. 2-1 56 (chapter 2, subchapter 1 of 56 in total, [example](pics/playaway_differentDisplay.jpg)). For this mode the files need to be named (see above) AND the PATWEAKS.DAT needs to contain the AF* tag e.g.: AWBVOL082002SLD090080PUP003 **AF*** NMD014  
-  
-New progress bar time display mode (only for the graphics model):  
-The segment model was missing everything after the NMD014 tag. I figured out if this information is present the segment model simply does not care and plays the files as usual. The graphics model on the other hand then does not display the length of the progress bar based from the complete audio book but from the currently playing chapter. On every chapter change it resets back and starts again. By leaving out the ELA tag one can choose on the graphics model how the progress bar should look.  
+##### Details to COP
+It is unclear what exactly COP5521 means (COP=COPyright?). But the following string is shown when the Playaway
+starts playing the first chapter of an audio book for a few seconds until the play time is displayed.
+It has an internal structure which seems to determine the position on the display and the time it is displayed.  
+Setting it to COP0000 or leaving it out does not display anything.  
   
 # Key combos
   
@@ -218,7 +260,7 @@ The following table shows a list of the already extracted firmware. Maybe a way 
 |G|01:05|3780496|00f0c2d8b4d3625cb4d3a2e772bf80ca1154c68e3ae275cee5c2a5c93d2fff4d|
 |G|01:08|3870608|974d9f9cc9c65aa5c4fd8ef92cf556c7a5ae64934c77f1b3048ce8d1a3f413ed|
   
-##
+  
 # Unbricking / Low level access
 If a Playaway is bricked there is currently no way to revive it. Still I created a POC which shows a possible
 future way. You can find it in the [poc_unbrick](poc_unbrick) folder.  
