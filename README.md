@@ -177,11 +177,18 @@ Setting it to COP0000 or leaving it out does not display anything.
   
 
 # The Perl script
-The script assumes it can write to the current directory and only works with Linux. It assumes `ffmpeg` and `mktemp` are callable. No additional Perl modules are needed.  
+The script assumes it can write to the current directory and only works with Linux. It assumes `ffmpeg`, `ffprobe` and `mktemp` are callable. No additional Perl modules are needed.  
 It expects all audio files to be converted within the same directory where it is placed.  
-It will create a local directory based on the book name you choose and place all converted files there to copy on your Playaway. All existing files of the Playaway can be deleted or backed up if you need them later.  
+It will create a local directory based on the book name you choose and places all converted files there to copy on your Playaway. All existing files of the Playaway can be deleted or backed up if you need them later.  
 The script tries to detect all errors so as long as no "ERROR: ..." message appears everything is ok. The script does not hide all the output of the called commands and is therefore a bit talkative.  
 The chapter order is determined by a simple Perl sort which sorts based on ASCII position.  
+  
+The script asks the following questions:  
+bookname: a name of the book which essentially is the folder name where the encoded files for the Playaway will be stored  
+bitrate: select the bitrate used to encode the audiobook, higher bitrates mean better quality but more space, you can also insert e.g. a1 to automatically determine the best bitrate based on the flash space your Playaway has, a1 stands for 1Gbit, a2 for 2Gbit and a4 for 4Gbit Playaways  
+splitmode: the script splits each file in chunks of the selected minutes, this is useful if you have on big file but want to create chapters e.g. every 30min  
+classic or light?: if you choose light the progress meter of the Playaway light will reflect the length of the complete audiobook, otherwise the length of the currently selected chapter  
+  
 
 ## AMR-WB+ encoder
 Finally the AMR-WB+ encoder binary `encoder-new` is also needed in the current directory.  
