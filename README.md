@@ -125,7 +125,7 @@ The following table lists all known flags and where known describes it's purpose
   
 | flag example | description |
 |--------------|------------|
-|AWBVOL082002|most likely header with version information|
+|AWBVOL082002|most likely header with version information or two tags AWB for the format and VOL for volume preset level|
 |SLD090080|?|
 |PUP003|?|
 |AF*|switches to subchapter mode if the file naming is also correct|
@@ -135,6 +135,10 @@ The following table lists all known flags and where known describes it's purpose
 |BLP020|?, but only is present if COP is present|
 |ELA00003B07D0BE|determines the relation of chapter and length of the progress bar on a graphics model|
 |COP5521~ 2007 FonoLibro Inc.00000019^ 2006 J.J. Bentez,222006 Editorial Planeta0000|displays copyright information during start of the first track, internal structure still unclear|
+|EQU|? most likely an equalizer preset|
+|MUS|?|
+|OBS|?|
+|SPB|?|
 
 ##### Details to ELA
 This took the longest to figure out and it's still not perfect but good enough (ELA=Estimated Length Audio?). The numbers are groups by hex digits of three:  
@@ -282,9 +286,10 @@ The following table shows a list of the already extracted firmware. Maybe a way 
 |G|01:08|3870608|974d9f9cc9c65aa5c4fd8ef92cf556c7a5ae64934c77f1b3048ce8d1a3f413ed|
   
   
-# Unbricking / Low level access
+# Unbricking / Low level access / Flash dumps
 If a Playaway is bricked there is currently no way to revive it. Still I created a POC which shows a possible
 future way. You can find it in the [poc_unbrick](poc_unbrick) folder.  
+There is also a description of how the flash is internally structured and how to extract the file system from a flash dump in the [flashdumptools](flashdumptools) folder.  
   
 # Future ideas
 - a back sticker that is rewriteable like a chalk board that can hold the currently installed audio book name  
